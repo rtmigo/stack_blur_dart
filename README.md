@@ -39,26 +39,30 @@ import 'package:bitmap/bitmap.dart';
 Future<Image> blurAsset(String assetName) async {
   ImageProvider provider = ExactAssetImage(assetName);
 
+  // Rain dance to receive pixel buffers
   final ImageStream stream = provider.resolve(ImageConfiguration.empty);
   final completer = Completer<ui.Image>();
 
+  // Still dancing
   late ImageStreamListener listener;
   listener = ImageStreamListener((frame, sync) {
     ui.Image image = frame.image;
     stream.removeListener(listener);
     completer.complete(image);
   });
-
   stream.addListener(listener);
 
+  // Still dancing
   ui.Image image = await completer.future;
   ByteData data = (await image.toByteData(format: ui.ImageByteFormat.rawRgba))!;
-  Uint32List rgbaPixels = data.buffer.asUint32List();  // this is the pixels we need
 
-  // we can blur the image buffer
+  // This is the pixels we need
+  Uint32List rgbaPixels = data.buffer.asUint32List();
+
+  // We can blur the image buffer
   stackBlurRgba(rgbaPixels, image.width, image.height, 42);
 
-  // we still need a third-party 'bitmap' library to turn the buffer into a widget
+  // We need a third-party 'bitmap' library to turn the buffer into a widget
   final bitmap = Bitmap.fromHeadless(
       image.width, image.height,
       rgbaPixels.buffer.asUint8List());
