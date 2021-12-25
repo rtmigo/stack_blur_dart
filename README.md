@@ -3,9 +3,9 @@
 Applies the [stack blur](https://underdestruction.com/2004/02/25/stackblur-2004/) algorithm to
 a buffer with RGBA pixels.
 
-The Stack blur algorithm works fast and looks good. It is a compromise between great looking
-[Gaussian blur](https://en.wikipedia.org/wiki/Gaussian_blur) and
-fast [Box blur](https://en.wikipedia.org/wiki/Box_blur).
+The Stack blur algorithm works fast and looks good. It is a compromise between great looking (but
+slow) [Gaussian blur](https://en.wikipedia.org/wiki/Gaussian_blur) and fast (but not so good-looking)
+[Box blur](https://en.wikipedia.org/wiki/Box_blur).
 
 It is faster than Gaussian Blur
 and better looking than Box Blur.
