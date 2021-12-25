@@ -1,0 +1,15 @@
+name: stack_blur
+description: "Cross-platform extensions that help determine the cause of a caught FileSystemException."
+version: 0.1.0
+homepage: https://github.com/rtmigo/stack_blur_dart
+
+environment:
+  sdk: ">=2.12.0 <3.0.0"
+
+dependencies:
+  # none
+
+dev_dependencies:
+  test: ^1.5.1
+  # we use the image library for tests
+  image: ^3.1.0
