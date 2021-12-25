@@ -42,8 +42,6 @@ Future<Image> blurAsset(String assetName) async {
   // Rain dance to receive get RGBA pixels from image
   final ImageStream stream = provider.resolve(ImageConfiguration.empty);
   final completer = Completer<ui.Image>();
-
-  // Still dancing
   late ImageStreamListener listener;
   listener = ImageStreamListener((frame, sync) {
     ui.Image image = frame.image;
@@ -51,8 +49,6 @@ Future<Image> blurAsset(String assetName) async {
     completer.complete(image);
   });
   stream.addListener(listener);
-
-  // Still dancing
   ui.Image image = await completer.future;
   ByteData data = (await image.toByteData(format: ui.ImageByteFormat.rawRgba))!;
 
