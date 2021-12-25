@@ -35,23 +35,26 @@ way](https://stackoverflow.com/a/60297917) through `ImageStreamListener`.
 import 'dart:ui' as ui;
 import 'package:flutter/material.dart';
 
-Uint32List rgbaPixels;
+// sample code, do not try to compile it :)
 
-ImageProvider provider = ExactAssetImage('$local_img_uri');
+void getRgba() async {
+    ImageProvider provider = ExactAssetImage('$local_img_uri');
 
-ImageStream stream = provider.resolve(ImageConfiguration.empty);
-Completer completer = Completer<ui.Image>();
-ImageStreamListener listener = ImageStreamListener((frame, sync) {
-    ui.Image image = frame.image;
-    completer.complete(image);
-    stream.removeListener(listener);
-})
+    ImageStream stream = provider.resolve(ImageConfiguration.empty);
+    Completer completer = Completer<ui.Image>();
+    ImageStreamListener listener = ImageStreamListener((frame, sync) {
+        ui.Image image = frame.image;
+        completer.complete(image);
+        stream.removeListener(listener);
+    })
 
-stream.addListener(listener);
+    stream.addListener(listener);
 
-completer.then((ui.Image image) {
-    image.toByteData(format: ui.ImageByteFormat.rowRgba).then((ByteData data) {
-        rgbaPixels = data.buffer.asUint32List();  // this is the pixels we need
-    });
-});
+    ui.Image image = await completer;
+    ByteData data = await image.toByteData(format: ui.ImageByteFormat.rowRgba)!;
+    Uint32List rgbaPixels = data.buffer.asUint32List();  // this is the pixels we need
+
+    // we can the image buffer it now
+    stackBlurRgba(rgbaPixels, image.width, image.height, 42);
+};
 ```
