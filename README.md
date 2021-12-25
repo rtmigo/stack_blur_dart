@@ -27,7 +27,7 @@ void main() {
 }
 ```
 
-Flutter has the same RGBA pixel buffers. You can [get it in a rather non-obvious
+Flutter images have the same RGBA pixel buffer. You can [get it in a rather non-obvious
 way](https://stackoverflow.com/a/60297917) through `ImageStreamListener`.
 
 ``` dart
