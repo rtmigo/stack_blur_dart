@@ -6,6 +6,7 @@
 import 'dart:math';
 import 'dart:typed_data';
 
+/// Applies a image blur filter to a buffer containing RGBA pixels.
 void stackBlurRgba(Uint32List rgbaPixels, int width, int height, int radius) {
   // Stack Blur Algorithm v1.0 by Mario Klingemann <mario@quasimondo.com>
   //
