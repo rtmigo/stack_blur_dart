@@ -64,5 +64,4 @@ void main() {
     // the function throws error because of the negative argument(s)
     expect(()=>stackBlurRgba(image.data, -image.width, -image.height, 10), throwsArgumentError);
   });
-
 }
