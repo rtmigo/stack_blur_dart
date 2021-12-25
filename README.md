@@ -26,3 +26,31 @@ void main() {
   File('blurred.png').writeAsBytesSync(encodePng(image));
 }
 ```
+
+The flutter has the same RGB pixel buffer. You can [get it in a rather non-obvious
+way](https://stackoverflow.com/a/60297917) through `ImageStreamListener`.
+
+``` dart
+import 'dart:ui' as ui;
+import 'package:flutter/material.dart';
+
+Uint32List rgbaPixels;
+
+ImageProvider provider = ExactAssetImage('$local_img_uri');
+
+ImageStream stream = provider.resolve(ImageConfiguration.empty);
+Completer completer = Completer<ui.Image>();
+ImageStreamListener listener = ImageStreamListener((frame, sync) {
+    ui.Image image = frame.image;
+    completer.complete(image);
+    stream.removeListener(listener);
+})
+
+stream.addListener(listener);
+
+completer.then((ui.Image image) {
+    image.toByteData(format: ui.ImageByteFormat.rowRgba).then((ByteData data) {
+        rgbaPixels = data.buffer.asUint32List();  // this is the pixels we need
+    });
+});
+```
