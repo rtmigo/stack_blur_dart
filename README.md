@@ -3,8 +3,9 @@
 Applies the [stack blur](https://underdestruction.com/2004/02/25/stackblur-2004/) algorithm to
 a buffer with RGBA pixels.
 
-This is a minimalist library with no external dependencies.  The library has no idea where the
-pixel buffer comes from.
+Stack blur is a compromise between Gaussian Blur and Box blur. It is faster than Gaussian Blur
+and better looking than Box Blur.
+
 
 ## Use with [image](https://pub.dev/packages/image) library
 
