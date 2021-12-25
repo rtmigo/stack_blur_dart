@@ -39,7 +39,7 @@ import 'package:bitmap/bitmap.dart';
 Future<Image> blurAsset(String assetName) async {
   ImageProvider provider = ExactAssetImage(assetName);
 
-  // Rain dance to receive get RGBA pixels from image
+  // Rain dance to get RGBA pixels from image
   final ImageStream stream = provider.resolve(ImageConfiguration.empty);
   final completer = Completer<ui.Image>();
   late ImageStreamListener listener;
