@@ -35,7 +35,7 @@ way](https://stackoverflow.com/a/60297917) through `ImageStreamListener`.
 import 'dart:ui' as ui;
 import 'package:flutter/material.dart';
 
-// sample code, do not try to compile it :)
+// sample code, do not try to compile :)
 
 void getRgba() async {
     ImageProvider provider = ExactAssetImage('$local_img_uri');
