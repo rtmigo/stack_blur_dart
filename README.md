@@ -37,15 +37,15 @@ import 'package:flutter/material.dart';
 
 // sample code, do not try to compile :)
 
-void getRgba() async {
-    ImageProvider provider = ExactAssetImage('$local_img_uri');
+Future<Image> blurRgba(String assetName) async {
+    ImageProvider provider = ExactAssetImage(assetName);
 
     ImageStream stream = provider.resolve(ImageConfiguration.empty);
     Completer completer = Completer<ui.Image>();
     ImageStreamListener listener = ImageStreamListener((frame, sync) {
         ui.Image image = frame.image;
-        completer.complete(image);
         stream.removeListener(listener);
+        completer.complete(image);
     })
 
     stream.addListener(listener);
@@ -56,5 +56,10 @@ void getRgba() async {
 
     // we can the image buffer it now
     stackBlurRgba(rgbaPixels, image.width, image.height, 42);
+
+    // Not the most efficient, but the generally accepted way to convert this into a widget
+    final ByteData? pngData =
+        await image.toByteData(format: ui.ImageByteFormat.png);
+    return Image.memory(pngData!.buffer.asUint8List());
 };
 ```
