@@ -1,3 +1,3 @@
-# 0.0.2
+# 0.1.0
 
-- Testing on GitHub
+- Published on PubDev
