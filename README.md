@@ -50,10 +50,10 @@ Future<Image> blurAsset(String assetName) async {
   });
   stream.addListener(listener);
   ui.Image image = await completer.future;
-  ByteData data = (await image.toByteData(format: ui.ImageByteFormat.rawRgba))!;
+  ByteData rgbaData = (await image.toByteData(format: ui.ImageByteFormat.rawRgba))!;
 
   // This is the pixels we need
-  Uint32List rgbaPixels = data.buffer.asUint32List();
+  Uint32List rgbaPixels = rgbaData.buffer.asUint32List();
 
   // We can blur the image buffer
   stackBlurRgba(rgbaPixels, image.width, image.height, 42);
@@ -61,7 +61,7 @@ Future<Image> blurAsset(String assetName) async {
   // We need a third-party 'bitmap' library to turn the buffer into a widget
   final bitmap = Bitmap.fromHeadless(
       image.width, image.height,
-      rgbaPixels.buffer.asUint8List());
+      rgbaData.buffer.asUint8List());
   return Image.memory(bitmap.buildHeaded());
 }
 ```
