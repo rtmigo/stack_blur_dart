@@ -6,8 +6,7 @@ a buffer with RGBA pixels.
 This is a minimalist library with no external dependencies.  The library has no idea where the
 pixel buffer comes from.
 
-For example, in the case of using the [image](https://pub.dev/packages/image/example) library,
-the filter can be used like this:
+## Use with [image](https://pub.dev/packages/image) library
 
 ```dart
 import 'dart:io';
@@ -26,6 +25,8 @@ void main() {
   File('blurred.png').writeAsBytesSync(encodePng(image));
 }
 ```
+
+## Use with Flutter and [bitmap](https://pub.dev/packages/bitmap) library
 
 Flutter images have the same RGBA pixel buffer. You can [get it in a rather non-obvious
 way](https://stackoverflow.com/a/60297917) through `ImageStreamListener`.
