@@ -65,3 +65,4 @@ void main() {
     expect(()=>stackBlurRgba(image.data, -image.width, -image.height, 10), throwsArgumentError);
   });
 }
+
