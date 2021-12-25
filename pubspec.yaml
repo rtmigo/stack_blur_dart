@@ -11,5 +11,5 @@ dependencies:
 
 dev_dependencies:
   test: ^1.5.1
-  # we use the image library for tests
+  lints: ^1.0.0
   image: ^3.1.0
