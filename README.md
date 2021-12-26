@@ -7,7 +7,8 @@
 Applies the [stack blur](https://underdestruction.com/2004/02/25/stackblur-2004/) to
 a buffer with RGBA pixels.
 
-The Stack blur algorithm works fast and looks good. It is a compromise between [Gaussian blur](https://en.wikipedia.org/wiki/Gaussian_blur)
+The Stack blur algorithm works fast and looks good. It is a compromise between
+[Gaussian blur](https://en.wikipedia.org/wiki/Gaussian_blur)
 and [Box blur](https://en.wikipedia.org/wiki/Box_blur).
 
 ## Use with [image](https://pub.dev/packages/image) library
