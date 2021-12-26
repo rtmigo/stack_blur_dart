@@ -10,17 +10,17 @@ import 'dart:typed_data';
 void stackBlurRgba(Uint32List rgbaPixels, int width, int height, int radius) {
   // Stack Blur Algorithm v1.0 by Mario Klingemann <mario@quasimondo.com>
   //
-  // Java Author: Mario Klingemann <mario@quasimondo.com>
-  // http://incubator.quasimondo.com
-  // created Feb 2004
+  // Dart port: Artёm IG <ortemeo@gmail.com>
+  // https://github.com/rtmigo
+  // ported Dec 2021
   //
   // Android port: Yahel Bouaziz <yahel@kayenko.com>
   // http://www.kayenko.com
   // ported Apr 2012
   //
-  // Dart port: Artёm IG <ortemeo@gmail.com>
-  // https://github.com/rtmigo
-  // ported Dec 2021
+  // Java Author: Mario Klingemann <mario@quasimondo.com>
+  // http://incubator.quasimondo.com
+  // created Feb 2004
   //
   // This is a compromise between Gaussian Blur and Box blur
   // It creates much better looking blurs than Box Blur, but
@@ -35,20 +35,17 @@ void stackBlurRgba(Uint32List rgbaPixels, int width, int height, int radius) {
   // or reduced by one, depending on if they are on the right or
   // on the left side of the stack.
 
-  if (width<0) {
+  if (width < 0) {
     throw ArgumentError.value(width, 'width');
   }
 
-  if (height<0) {
+  if (height < 0) {
     throw ArgumentError.value(height, 'height');
   }
 
-
-  if (rgbaPixels.length != width*height) {
+  if (rgbaPixels.length != width * height) {
     throw ArgumentError('Image size does not correspond to the number of pixels');
   }
-
-
 
   if (radius < 1) {
     throw ArgumentError.value(radius, 'radius');
@@ -76,7 +73,7 @@ void stackBlurRgba(Uint32List rgbaPixels, int width, int height, int radius) {
   for (i = 0; i < 256 * divSum; i++) {
     int short = i ~/ divSum;
     assert(-32768 <= short && short <= 32767);
-    dv[i] = short; // (short)
+    dv[i] = short;
   }
 
   yw = yi = 0;
