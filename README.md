@@ -18,7 +18,7 @@ does not impose external dependencies.
 ```dart
 import 'dart:io';
 
-import 'package:image/image.dart';
+import 'package:image/image.dart';  // third-party library
 import 'package:stack_blur/stack_blur.dart';
 
 void main() {
@@ -40,6 +40,10 @@ Flutter images have the same RGBA pixel buffer. You can get it in a rather non-o
 way through `ImageStreamListener`.
 
 ``` dart
+import 'dart:ui' as ui;
+import 'package:flutter/material.dart';
+import 'package:bitmap/bitmap.dart';  // third-party library
+
 Future<Image> blurAsset(String assetName) async {
   ImageProvider provider = ExactAssetImage(assetName);
 
@@ -60,13 +64,13 @@ Future<Image> blurAsset(String assetName) async {
   ui.Image image = await completer.future;
   ByteData rgbaData = (await image.toByteData(format: ui.ImageByteFormat.rawRgba))!;
 
-  // This is the pixels we need
+  // These are the pixels we needed
   Uint32List rgbaPixels = rgbaData.buffer.asUint32List();
 
-  // We can blur the image buffer
+  // Now we can blur the image buffer
   stackBlurRgba(rgbaPixels, image.width, image.height, 42);
 
-  // We need a third-party 'bitmap' library to turn the buffer into a widget
+  // We use a third-party 'bitmap' library to turn the buffer into a widget
   final bitmap = Bitmap.fromHeadless(
       image.width, image.height,
       rgbaPixels.buffer.asUint8List());
