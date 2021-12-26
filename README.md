@@ -4,7 +4,7 @@
 
 # [stack_blur](https://github.com/rtmigo/stack_blur_dart)
 
-Applies the [stack blur](https://underdestruction.com/2004/02/25/stackblur-2004/) to
+Applies the [Stack blur](https://underdestruction.com/2004/02/25/stackblur-2004/) to
 a buffer with RGBA pixels.
 
 The Stack blur algorithm works fast and looks good. It is a compromise between
