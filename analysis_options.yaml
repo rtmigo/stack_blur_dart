@@ -12,4 +12,3 @@ linter:
 analyzer:
 #   exclude:
 #     - path/to/excluded/files/**
-
