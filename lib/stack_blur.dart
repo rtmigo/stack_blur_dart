@@ -7,6 +7,9 @@ import 'dart:math';
 import 'dart:typed_data';
 
 /// Applies a image blur filter to a buffer containing RGBA pixels.
+///
+/// The buffer will be modified in place. The color channels will be blurred.
+/// The alpha channel will remain intact.
 void stackBlurRgba(Uint32List rgbaPixels, int width, int height, int radius) {
   // Stack Blur Algorithm v1.0 by Mario Klingemann <mario@quasimondo.com>
   //
@@ -83,7 +86,7 @@ void stackBlurRgba(Uint32List rgbaPixels, int width, int height, int radius) {
 
   int stackPointer;
   int stackStart;
-  late Int32List sir;
+  //late Int32List sir;
   int rbs;
   int r1 = radius + 1;
   int routSum, goutSum, boutSum;
@@ -93,7 +96,7 @@ void stackBlurRgba(Uint32List rgbaPixels, int width, int height, int radius) {
     rinSum = ginSum = binSum = routSum = goutSum = boutSum = rSum = gSum = bSum = 0;
     for (i = -radius; i <= radius; i++) {
       p = rgbaPixels[yi + min(wm, max(i, 0))];
-      sir = stack[i + radius];
+      Int32List sir = stack[i + radius];
       sir[0] = (p & 0xff0000) >> 16;
       sir[1] = (p & 0x00ff00) >> 8;
       sir[2] = (p & 0x0000ff);
@@ -130,7 +133,7 @@ void stackBlurRgba(Uint32List rgbaPixels, int width, int height, int radius) {
       bSum -= boutSum;
 
       stackStart = stackPointer - radius + div;
-      sir = stack[stackStart % div];
+      Int32List sir = stack[stackStart % div];
 
       routSum -= sir[0];
       goutSum -= sir[1];
@@ -174,7 +177,7 @@ void stackBlurRgba(Uint32List rgbaPixels, int width, int height, int radius) {
     for (i = -radius; i <= radius; i++) {
       yi = max(0, yp) + x;
 
-      sir = stack[i + radius];
+      Int32List sir = stack[i + radius];
 
       sir[0] = r[yi];
       sir[1] = g[yi];
@@ -212,7 +215,7 @@ void stackBlurRgba(Uint32List rgbaPixels, int width, int height, int radius) {
       bSum -= boutSum;
 
       stackStart = stackPointer - radius + div;
-      sir = stack[stackStart % div];
+      Int32List sir = stack[stackStart % div];
 
       routSum -= sir[0];
       goutSum -= sir[1];
