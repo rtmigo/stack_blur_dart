@@ -18,7 +18,7 @@ does not impose external dependencies.
 ```dart
 import 'dart:io';
 
-import 'package:image/image.dart';
+import 'package:image/image.dart';  // third-party library
 import 'package:stack_blur/stack_blur.dart';
 
 void main() {
@@ -36,13 +36,14 @@ void main() {
 
 ## Use with Flutter and [bitmap](https://pub.dev/packages/bitmap) library
 
-Flutter images have the same RGBA pixel buffer. You can [get it in a rather non-obvious
-way](https://stackoverflow.com/a/60297917) through `ImageStreamListener`.
+Flutter images have the same RGBA pixel buffer. You can get it in a rather non-obvious
+way through `ImageStreamListener`.
 
 ``` dart
 import 'dart:ui' as ui;
 import 'package:flutter/material.dart';
-import 'package:bitmap/bitmap.dart';
+import 'package:bitmap/bitmap.dart';  // third-party library
+import 'package:stack_blur/stack_blur.dart';
 
 Future<Image> blurAsset(String assetName) async {
   ImageProvider provider = ExactAssetImage(assetName);
@@ -51,21 +52,26 @@ Future<Image> blurAsset(String assetName) async {
   final ImageStream stream = provider.resolve(ImageConfiguration.empty);
   final completer = Completer<ui.Image>();
   late ImageStreamListener listener;
-  listener = ImageStreamListener((frame, _) {
-    stream.removeListener(listener);
-    completer.complete(frame.image);
-  });
+  listener = ImageStreamListener(
+    (frame, _) {
+        stream.removeListener(listener);
+        completer.complete(frame.image);
+    },
+    onError: (error, stack) {
+        stream.removeListener(listener);
+        completer.completeError(error, stack);
+    });
   stream.addListener(listener);
   ui.Image image = await completer.future;
   ByteData rgbaData = (await image.toByteData(format: ui.ImageByteFormat.rawRgba))!;
 
-  // This is the pixels we need
+  // These are the pixels we needed
   Uint32List rgbaPixels = rgbaData.buffer.asUint32List();
 
-  // We can blur the image buffer
+  // Now we can blur the image buffer
   stackBlurRgba(rgbaPixels, image.width, image.height, 42);
 
-  // We need a third-party 'bitmap' library to turn the buffer into a widget
+  // We use a third-party 'bitmap' library to turn the buffer into a widget
   final bitmap = Bitmap.fromHeadless(
       image.width, image.height,
       rgbaPixels.buffer.asUint8List());
