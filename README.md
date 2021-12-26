@@ -1,10 +1,14 @@
+![Generic badge](https://img.shields.io/badge/status-it_works-ok.svg)
+[![Pub Package](https://img.shields.io/pub/v/stack_blur.svg)](https://pub.dev/packages/stack_blur)
+[![pub points](https://badges.bar/stack_blur/pub%20points)](https://pub.dev/packages/stack_blur/score)
 
 # [stack_blur](https://github.com/rtmigo/stack_blur_dart)
 
 Applies the [stack blur](https://underdestruction.com/2004/02/25/stackblur-2004/) to
 a buffer with RGBA pixels.
 
-The Stack blur algorithm works fast and looks good. It is a compromise between [Gaussian blur](https://en.wikipedia.org/wiki/Gaussian_blur)
+The Stack blur algorithm works fast and looks good. It is a compromise between
+[Gaussian blur](https://en.wikipedia.org/wiki/Gaussian_blur)
 and [Box blur](https://en.wikipedia.org/wiki/Box_blur).
 
 ## Use with [image](https://pub.dev/packages/image) library
@@ -44,10 +48,9 @@ Future<Image> blurAsset(String assetName) async {
   final ImageStream stream = provider.resolve(ImageConfiguration.empty);
   final completer = Completer<ui.Image>();
   late ImageStreamListener listener;
-  listener = ImageStreamListener((frame, sync) {
-    ui.Image image = frame.image;
+  listener = ImageStreamListener((frame, _) {
     stream.removeListener(listener);
-    completer.complete(image);
+    completer.complete(frame.image);
   });
   stream.addListener(listener);
   ui.Image image = await completer.future;
