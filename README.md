@@ -10,8 +10,8 @@ The [Stack blur](https://underdestruction.com/2004/02/25/stackblur-2004/) works 
 It is a compromise between [Gaussian blur](https://en.wikipedia.org/wiki/Gaussian_blur)
 and [Box blur](https://en.wikipedia.org/wiki/Box_blur).
 
-This library modifies a raw buffer containing RGBA pixels. This is somewhat "low-level", but
-universal and does not impose external dependencies.
+This library modifies a raw buffer containing RGBA pixels. This is "low-level", but universal and
+does not impose external dependencies.
 
 ## Use with [image](https://pub.dev/packages/image) library
 
