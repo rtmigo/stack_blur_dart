@@ -43,6 +43,7 @@ way through `ImageStreamListener`.
 import 'dart:ui' as ui;
 import 'package:flutter/material.dart';
 import 'package:bitmap/bitmap.dart';  // third-party library
+import 'package:stack_blur/stack_blur.dart';
 
 Future<Image> blurAsset(String assetName) async {
   ImageProvider provider = ExactAssetImage(assetName);
