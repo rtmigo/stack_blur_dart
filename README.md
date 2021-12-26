@@ -22,9 +22,10 @@ import 'package:stack_blur/stack_blur.dart';
 void main() {
   // loading image from file
   final image = decodeImage(File('source.png').readAsBytesSync())!;
+  Uint32List rgbaPixels = image.data;
 
   // blurring image pixels with blur radius 42
-  stackBlurRgba(image.data, image.width, image.height, 42);
+  stackBlurRgba(rgbaPixels, image.width, image.height, 42);
 
   // saving image to file
   File('blurred.png').writeAsBytesSync(encodePng(image));
@@ -65,7 +66,7 @@ Future<Image> blurAsset(String assetName) async {
   // We need a third-party 'bitmap' library to turn the buffer into a widget
   final bitmap = Bitmap.fromHeadless(
       image.width, image.height,
-      rgbaData.buffer.asUint8List());
+      rgbaPixels.buffer.asUint8List());
   return Image.memory(bitmap.buildHeaded());
 }
 ```
