@@ -82,6 +82,7 @@ void stackBlurRgba(Uint32List rgbaPixels, int width, int height, int radius) {
   yw = yi = 0;
 
   //int[][] stack = new int[div][3];
+  // todo maybe optimize initialization to avoid calling function
   final stack = List<Int32List>.generate(div, (_) => Int32List(3), growable: false);
 
   int stackPointer;
@@ -104,6 +105,8 @@ void stackBlurRgba(Uint32List rgbaPixels, int width, int height, int radius) {
       sir[0] = (p & 0xff0000) >> 16;
       sir[1] = (p & 0x00ff00) >> 8;
       sir[2] = (p & 0x0000ff);
+
+      // todo from this line use three local integers instead Int32List sir
 
       rbs = r1 - i.abs();
       rSum += sir[0] * rbs;
@@ -152,6 +155,8 @@ void stackBlurRgba(Uint32List rgbaPixels, int width, int height, int radius) {
       sir[1] = (p & 0x00ff00) >> 8;
       sir[2] = (p & 0x0000ff);
 
+      // todo from this line use three local integers instead Int32List sir
+
       rinSum += sir[0];
       ginSum += sir[1];
       binSum += sir[2];
@@ -186,6 +191,8 @@ void stackBlurRgba(Uint32List rgbaPixels, int width, int height, int radius) {
       sir[0] = r[yi];
       sir[1] = g[yi];
       sir[2] = b[yi];
+
+      // todo from this line use three local integers instead Int32List sir
 
       rbs = r1 - i.abs();
 
@@ -233,6 +240,8 @@ void stackBlurRgba(Uint32List rgbaPixels, int width, int height, int radius) {
       sir[0] = r[p];
       sir[1] = g[p];
       sir[2] = b[p];
+
+      // todo from this line use three local integers instead Int32List sir
 
       rinSum += sir[0];
       ginSum += sir[1];
