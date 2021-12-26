@@ -184,7 +184,7 @@ void stackBlurRgba(Uint32List rgbaPixels, int width, int height, int radius) {
     rinSum = ginSum = binSum = routSum = goutSum = boutSum = rSum = gSum = bSum = 0;
     yp = -radius * width;
     for (i = -radius; i <= radius; i++) {
-      yi = max(0, yp) + x;
+      yi = max(0, yp) + x;  // todo avoid function call?
 
       final Int32List sir = stack[i + radius];
 
