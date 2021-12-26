@@ -4,12 +4,14 @@
 
 # [stack_blur](https://github.com/rtmigo/stack_blur_dart)
 
-Applies the [stack blur](https://underdestruction.com/2004/02/25/stackblur-2004/) to
-a buffer with RGBA pixels.
+The Dart library for blurring images with the Stack blur algorithm.
 
-The Stack blur algorithm works fast and looks good. It is a compromise between
-[Gaussian blur](https://en.wikipedia.org/wiki/Gaussian_blur)
+The [Stack blur](https://underdestruction.com/2004/02/25/stackblur-2004/) works fast and looks good.
+It is a compromise between [Gaussian blur](https://en.wikipedia.org/wiki/Gaussian_blur)
 and [Box blur](https://en.wikipedia.org/wiki/Box_blur).
+
+This library modifies a raw buffer containing RGBA pixels. This is "low-level", but universal and
+does not impose external dependencies.
 
 ## Use with [image](https://pub.dev/packages/image) library
 
@@ -22,9 +24,10 @@ import 'package:stack_blur/stack_blur.dart';
 void main() {
   // loading image from file
   final image = decodeImage(File('source.png').readAsBytesSync())!;
+  Uint32List rgbaPixels = image.data;
 
   // blurring image pixels with blur radius 42
-  stackBlurRgba(image.data, image.width, image.height, 42);
+  stackBlurRgba(rgbaPixels, image.width, image.height, 42);
 
   // saving image to file
   File('blurred.png').writeAsBytesSync(encodePng(image));
@@ -65,7 +68,7 @@ Future<Image> blurAsset(String assetName) async {
   // We need a third-party 'bitmap' library to turn the buffer into a widget
   final bitmap = Bitmap.fromHeadless(
       image.width, image.height,
-      rgbaData.buffer.asUint8List());
+      rgbaPixels.buffer.asUint8List());
   return Image.memory(bitmap.buildHeaded());
 }
 ```

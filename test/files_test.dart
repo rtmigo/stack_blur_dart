@@ -2,6 +2,7 @@
 // SPDX-License-Identifier: MIT
 
 import 'dart:io';
+import 'dart:typed_data';
 
 import 'package:image/image.dart';
 import 'package:stack_blur/stack_blur.dart';
@@ -28,7 +29,8 @@ void main() {
     String outputFilePath = 'test/images/3_output/road_blur_50.png';
     String goldenFilePath = 'test/images/2_expected/road_blur_50.png';
     final image = decodeImage(File(inputFilePath).readAsBytesSync())!;
-    stackBlurRgba(image.data, image.width, image.height, 50);
+    Uint32List rgbaPixels = image.data;
+    stackBlurRgba(rgbaPixels, image.width, image.height, 50);
     File(outputFilePath).writeAsBytesSync(encodePng(image));
 
     expectFilesEqual(outputFilePath, goldenFilePath);
