@@ -40,10 +40,6 @@ Flutter images have the same RGBA pixel buffer. You can [get it in a rather non-
 way](https://stackoverflow.com/a/60297917) through `ImageStreamListener`.
 
 ``` dart
-import 'dart:ui' as ui;
-import 'package:flutter/material.dart';
-import 'package:bitmap/bitmap.dart';
-
 Future<Image> blurAsset(String assetName) async {
   ImageProvider provider = ExactAssetImage(assetName);
 
@@ -51,10 +47,15 @@ Future<Image> blurAsset(String assetName) async {
   final ImageStream stream = provider.resolve(ImageConfiguration.empty);
   final completer = Completer<ui.Image>();
   late ImageStreamListener listener;
-  listener = ImageStreamListener((frame, _) {
-    stream.removeListener(listener);
-    completer.complete(frame.image);
-  });
+  listener = ImageStreamListener(
+    (frame, _) {
+        stream.removeListener(listener);
+        completer.complete(frame.image);
+    },
+    onError: (error, stack) {
+        stream.removeListener(listener);
+        completer.completeError(error, stack);
+    });
   stream.addListener(listener);
   ui.Image image = await completer.future;
   ByteData rgbaData = (await image.toByteData(format: ui.ImageByteFormat.rawRgba))!;
