@@ -36,8 +36,8 @@ void main() {
 
 ## Use with Flutter and [bitmap](https://pub.dev/packages/bitmap) library
 
-Flutter images have the same RGBA pixel buffer. You can [get it in a rather non-obvious
-way](https://stackoverflow.com/a/60297917) through `ImageStreamListener`.
+Flutter images have the same RGBA pixel buffer. You can get it in a rather non-obvious
+way through `ImageStreamListener`.
 
 ``` dart
 Future<Image> blurAsset(String assetName) async {
