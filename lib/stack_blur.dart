@@ -7,6 +7,9 @@ import 'dart:math';
 import 'dart:typed_data';
 
 /// Applies a image blur filter to a buffer containing RGBA pixels.
+///
+/// The buffer will be modified in place. The color channels will be blurred.
+/// The alpha channel will remain intact.
 void stackBlurRgba(Uint32List rgbaPixels, int width, int height, int radius) {
   // Stack Blur Algorithm v1.0 by Mario Klingemann <mario@quasimondo.com>
   //
@@ -79,11 +82,15 @@ void stackBlurRgba(Uint32List rgbaPixels, int width, int height, int radius) {
   yw = yi = 0;
 
   //int[][] stack = new int[div][3];
-  final stack = List<Int32List>.generate(div, (_) => Int32List(3));
+  final stack = List<Int32List>.generate(div, (_) => Int32List(3), growable: false);
 
   int stackPointer;
   int stackStart;
-  late Int32List sir;
+
+  // assigning `sir` to temporary stub value. Not declaring 'late' to avoid
+  // runtime checks, whether it really assigned
+  Int32List sir = Int32List(0);
+
   int rbs;
   int r1 = radius + 1;
   int routSum, goutSum, boutSum;
@@ -174,7 +181,7 @@ void stackBlurRgba(Uint32List rgbaPixels, int width, int height, int radius) {
     for (i = -radius; i <= radius; i++) {
       yi = max(0, yp) + x;
 
-      sir = stack[i + radius];
+      final Int32List sir = stack[i + radius];
 
       sir[0] = r[yi];
       sir[1] = g[yi];
@@ -212,7 +219,7 @@ void stackBlurRgba(Uint32List rgbaPixels, int width, int height, int radius) {
       bSum -= boutSum;
 
       stackStart = stackPointer - radius + div;
-      sir = stack[stackStart % div];
+      Int32List sir = stack[stackStart % div];
 
       routSum -= sir[0];
       goutSum -= sir[1];
